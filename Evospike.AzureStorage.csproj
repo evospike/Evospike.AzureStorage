@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <PackOnBuild>true</PackOnBuild>
+    <Authors>Enmanuel López</Authors>
+    <Copyright>evospike.com</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Owners>Enmanuel López</Owners>
+    <Summary>This package is designed to use azure blob storage in a very simple way.</Summary>
+    <PackageTags>.NET Core</PackageTags>
+    <Title>Evospike.AzureStorage</Title>
+    <Description>This package is designed to use azure blob storage in a very simple way.</Description>
+    <PackageId>Evospike.AzureStorage</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Settings\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Microsoft.AspNetCore.Http" />
+    <None Remove="Services\" />
+    <None Remove="Azure.Storage.Blobs" />
+    <None Remove="Extensions\" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="Microsoft.Extensions.Configuration.Binder" />
+    <None Remove="Microsoft.Extensions.DependencyInjection" />
+    <None Remove="NuGet.Build.Packaging" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Settings\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.9.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
