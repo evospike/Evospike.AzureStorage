@@ -41,5 +41,17 @@ public class ItemsController : ControllerBase
         var responseUrl = await _storageService.SaveBlobAsync("ContainerName", file);
         return Redirect(responseUrl);
     }
+    
+    public IActionResult ViewFile(string fileName)
+    {
+        var responseUrl = _storageService.GetProtectedUrl("ContainerName", fileName, DateTimeOffset.UtcNow.AddSeconds(10));
+        return Redirect(responseUrl);
+    }
+    
+    public async Task<IActionResult> DeleteFile(string fileName)
+    {
+        await _storageService.RemoveBlobAsync("ContainerName", fileName);
+        return View();
+    }
 }
 ```
