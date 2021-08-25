@@ -7,7 +7,7 @@ Allows you to configure AzureStorage in a very simple way
 
 The file path and other settings can be read from JSON configuration if desired.
 
-In `appsettings.json` add a `"MongoDbSettings", "ServiceSettings"` properties:
+In `appsettings.json` add a `"AzureStorageSetting"` properties:
 
 ```json
 {
