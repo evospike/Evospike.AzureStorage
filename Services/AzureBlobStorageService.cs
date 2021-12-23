@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
 using Evospike.AzureStorage.Interfaces;
 using Evospike.AzureStorage.Settings;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 
 namespace Evospike.AzureStorage.Services
