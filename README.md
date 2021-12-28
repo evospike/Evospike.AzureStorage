@@ -41,16 +41,22 @@ public class ItemsController : ControllerBase
         var responseUrl = await _storageService.SaveBlobAsync("ContainerName", file);
         return Redirect(responseUrl);
     }
-    
-    public IActionResult ViewFile(string fileName)
+
+    public async Task<IActionResult> UploadFile(string blobPath, Stream file)
     {
-        var responseUrl = _storageService.GetProtectedUrl("ContainerName", fileName, DateTimeOffset.UtcNow.AddSeconds(10));
+        var responseUrl = await _storageService.SaveBlobAsync("ContainerName", blobPath, file);
         return Redirect(responseUrl);
     }
     
-    public async Task<IActionResult> DeleteFile(string fileName)
+    public IActionResult ViewFile(string filePath)
     {
-        await _storageService.RemoveBlobAsync("ContainerName", fileName);
+        var responseUrl = _storageService.GetProtectedUrl("ContainerName", filePath, DateTimeOffset.UtcNow.AddSeconds(10));
+        return Redirect(responseUrl);
+    }
+    
+    public async Task<IActionResult> DeleteFile(string filePath)
+    {
+        await _storageService.RemoveBlobAsync("ContainerName", filePath);
         return View();
     }
 }
