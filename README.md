@@ -13,7 +13,7 @@ In `appsettings.json` add a `"AzureStorageSetting"` properties:
 {
    "AzureStorageSetting": {
     "StorageConnectionString": "{YourConnectionString}",
-    "AccountUrl": "{YourAccountUrl}"
+    "AccountName": "{YourAccountName}"
   }
 }
 ```
