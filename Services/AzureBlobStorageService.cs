@@ -79,7 +79,7 @@ namespace Evospike.AzureStorage.Services
             await container.CreateIfNotExistsAsync();
 
             var blob = container.GetBlobClient(blobPath);
-            await blob.UploadAsync(file);
+            await blob.UploadAsync(file, true);
 
             return $"{_azureStorageSetting.AccountName}/{containerName}/{blobPath}";
         }
