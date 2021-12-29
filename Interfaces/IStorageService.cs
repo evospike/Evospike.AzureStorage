@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Evospike.AzureStorage.Interfaces
@@ -16,5 +17,6 @@ namespace Evospike.AzureStorage.Interfaces
         Task RemoveBlobAsync(string containerName, string blobPath);
         string GetProtectedUrl(string containerName, string blobPath, DateTimeOffset expireDate);
         Task<Stream> DownloadBlobAsync(string containerName, string blobPath);
+        Task<BlobProperties> GetBlobProperties(string containerName, string blobPath);
     }
 }

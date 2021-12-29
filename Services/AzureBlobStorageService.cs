@@ -5,6 +5,7 @@ using Evospike.AzureStorage.Interfaces;
 using Evospike.AzureStorage.Settings;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
+using Azure.Storage.Blobs.Models;
 
 namespace Evospike.AzureStorage.Services
 {
@@ -91,6 +92,15 @@ namespace Evospike.AzureStorage.Services
             var sasToken = blob.GenerateSasUri(Azure.Storage.Sas.BlobSasPermissions.Read, expireDate);
 
             return sasToken.AbsoluteUri;
+        }
+
+         public async Task<BlobProperties> GetBlobProperties(string containerName, string blobPath)
+        {
+            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
+            var blob = container.GetBlobClient(blobPath);
+            var properties = await blob.GetPropertiesAsync();
+
+            return properties.Value;
         }
 
         public async Task<Stream> DownloadBlobAsync(string containerName, string blobPath) 

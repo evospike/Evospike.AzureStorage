@@ -69,4 +69,5 @@ _storageService.CreateContainerAsync("ContainerName");
 _storageService.RemoveContainerAsync("ContainerName");
 _storageService.GetContainerSize("ContainerName");
 _storageService.DownloadBlobAsync("ContainerName", "blobPath");
+_storageService.GetBlobProperties("ContainerName", "blobPath")
 ```
