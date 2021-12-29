@@ -19,9 +19,32 @@ namespace Evospike.AzureStorage.Services
             _azureStorageSetting = azureStorageSetting;
         }
 
+        public async Task<BlobContainerClient> CreateContainerAsync(string containerName) 
+        {
+            return await _blobServiceClient.CreateBlobContainerAsync(containerName.Replace(".", "-"));
+        }
+
+        public async Task RemoveContainerAsync(string containerName) 
+        {
+            await _blobServiceClient.DeleteBlobContainerAsync(containerName.Replace(".", "-"));
+        }
+
+        public async Task<long> GetContainerSize(string containerName) 
+        {
+            var containerClient = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
+            long size = 0;
+
+            await foreach (var blobItem in containerClient.GetBlobsAsync())
+            {
+                size += blobItem.Properties.ContentLength ?? 0;
+            }
+
+            return size;
+        }
+
         public string GetProtectedUrl(string containerName, string blobPath, DateTimeOffset expireDate)
         {
-            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
             var blob = container.GetBlobClient(blobPath);
             var sasToken = blob.GenerateSasUri(Azure.Storage.Sas.BlobSasPermissions.Read, expireDate);
 
@@ -30,7 +53,7 @@ namespace Evospike.AzureStorage.Services
 
         public async Task RemoveBlobAsync(string containerName, string blobPath)
         {
-            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
             var blob = container.GetBlobClient(blobPath);
             await blob.DeleteIfExistsAsync();
         }
@@ -45,6 +68,7 @@ namespace Evospike.AzureStorage.Services
             var newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}-{Guid.NewGuid()}{extension}";
 
             using var stream = file.OpenReadStream();
+            containerName = containerName.Replace(".", "-");
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
             await container.CreateIfNotExistsAsync();
 
@@ -59,6 +83,7 @@ namespace Evospike.AzureStorage.Services
             if (file == null)
                 return null;
 
+            containerName = containerName.Replace(".", "-");
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
             await container.CreateIfNotExistsAsync();
 
