@@ -61,3 +61,11 @@ public class ItemsController : ControllerBase
     }
 }
 ```
+
+Additional methods
+
+```csharp
+_storageService.CreateContainerAsync("ContainerName");
+_storageService.RemoveContainerAsync("ContainerName");
+_storageService.GetContainerSize("ContainerName");
+```
