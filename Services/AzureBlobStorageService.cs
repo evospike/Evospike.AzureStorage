@@ -42,15 +42,6 @@ namespace Evospike.AzureStorage.Services
             return size;
         }
 
-        public string GetProtectedUrl(string containerName, string blobPath, DateTimeOffset expireDate)
-        {
-            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
-            var blob = container.GetBlobClient(blobPath);
-            var sasToken = blob.GenerateSasUri(Azure.Storage.Sas.BlobSasPermissions.Read, expireDate);
-
-            return sasToken.AbsoluteUri;
-        }
-
         public async Task RemoveBlobAsync(string containerName, string blobPath)
         {
             var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
@@ -91,6 +82,24 @@ namespace Evospike.AzureStorage.Services
             await blob.UploadAsync(file);
 
             return $"{_azureStorageSetting.AccountName}/{containerName}/{blobPath}";
+        }
+
+        public string GetProtectedUrl(string containerName, string blobPath, DateTimeOffset expireDate)
+        {
+            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
+            var blob = container.GetBlobClient(blobPath);
+            var sasToken = blob.GenerateSasUri(Azure.Storage.Sas.BlobSasPermissions.Read, expireDate);
+
+            return sasToken.AbsoluteUri;
+        }
+
+        public async Task<Stream> DownloadBlobAsync(string containerName, string blobPath) 
+        {
+            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
+            var blob = container.GetBlobClient(blobPath);
+            var content = await blob.DownloadStreamingAsync();
+
+            return content.Value.Content;
         }
     }
 }
