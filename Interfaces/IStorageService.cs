@@ -14,6 +14,7 @@ namespace Evospike.AzureStorage.Interfaces
         Task<long> GetContainerSize(string containerName);
         Task<string> SaveBlobAsync(string containerName, IFormFile file);
         Task<string> SaveBlobAsync(string containerName, string blobPath, Stream file);
+        Task<bool> ExistBlobAsync(string containerName, string blobPath);
         Task RemoveBlobAsync(string containerName, string blobPath);
         string GetProtectedUrl(string containerName, string blobPath, DateTimeOffset expireDate);
         Task<Stream> DownloadBlobAsync(string containerName, string blobPath);

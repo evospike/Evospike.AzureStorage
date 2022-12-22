@@ -22,7 +22,14 @@ namespace Evospike.AzureStorage.Services
 
         public async Task<BlobContainerClient> CreateContainerAsync(string containerName) 
         {
-            return await _blobServiceClient.CreateBlobContainerAsync(containerName.Replace(".", "-"));
+            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
+            var exist = await container.ExistsAsync();
+
+            if(!exist.Value) {
+                return await _blobServiceClient.CreateBlobContainerAsync(containerName.Replace(".", "-"));
+            }
+            
+            return container;
         }
 
         public async Task RemoveContainerAsync(string containerName) 
@@ -41,6 +48,15 @@ namespace Evospike.AzureStorage.Services
             }
 
             return size;
+        }
+
+        public async Task<bool> ExistBlobAsync(string containerName, string blobPath)
+        {
+            var container = _blobServiceClient.GetBlobContainerClient(containerName.Replace(".", "-"));
+            var blob = container.GetBlobClient(blobPath);
+            var exist = await blob.ExistsAsync();
+
+            return exist.Value;
         }
 
         public async Task RemoveBlobAsync(string containerName, string blobPath)

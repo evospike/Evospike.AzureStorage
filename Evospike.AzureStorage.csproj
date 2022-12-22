@@ -12,7 +12,7 @@
     <Title>Evospike.AzureStorage</Title>
     <Description>This package is designed to use azure blob storage in a very simple way.</Description>
     <PackageId>Evospike.AzureStorage</PackageId>
-    <PackageVersion>1.0.6</PackageVersion>
+    <PackageVersion>1.0.8</PackageVersion>
     <PackageProjectUrl>https://github.com/evospike/Evospike.AzureStorage</PackageProjectUrl>
   </PropertyGroup>
 
